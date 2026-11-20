@@ -1,73 +1,52 @@
-import { channels, clients, hero, messages, metrics, whatsappLink } from '../data/content';
-import { ArrowIcon } from './Icons';
-import { MarginCalculator } from './MarginCalculator';
+import { useEffect, useState } from 'react';
+import { about, company, hero } from '../data/content';
+import { ArrowDownIcon } from './Icons';
+import { SplitText } from './ui';
 
 export function Hero() {
+  const [ready, setReady] = useState(false);
+  useEffect(() => {
+    const t = requestAnimationFrame(() => setReady(true));
+    return () => cancelAnimationFrame(t);
+  }, []);
+
+  const [first, second] = hero.name;
+
   return (
-    <section id="inicio" className="hero" aria-labelledby="hero-title">
-      <div className="hero-grid-bg" aria-hidden="true" />
-      <div className="container hero-layout">
-        <div className="hero-copy">
-          <p className="eyebrow hero-eyebrow">
-            <span className="status-dot" aria-hidden="true" />
-            {hero.eyebrow}
-          </p>
-          <h1 id="hero-title" className="hero-title">
-            {hero.title.slice(0, -1).join(' ')}{' '}
-            <span className="hero-title-accent">{hero.title[hero.title.length - 1]}</span>
-          </h1>
-          <p className="hero-lead">{hero.lead}</p>
+    <section id="inicio" className={`hero ${ready ? 'is-in' : ''}`} data-progress="pin" aria-labelledby="hero-title">
+      <div className="hero-stage">
+        <h1 id="hero-title" className="hero-name">
+          <span className="hero-line hero-line--a">
+            <SplitText text={first} />
+          </span>
+          <span className="hero-line hero-line--b">
+            <SplitText text={second} delay={first.length} />
+          </span>
+          <span className="sr-only"> · {company.name}</span>
+        </h1>
 
-          <div className="hero-actions">
-            <a className="btn btn-neon btn-lg" href="#contato">
-              Agendar diagnóstico
-              <ArrowIcon />
-            </a>
-            <a className="btn btn-ghost btn-lg" href="#cases">
-              Ver cases
-            </a>
-          </div>
-
-          <div className="hero-clients">
-            <span className="mono-label">Clientes e projetos</span>
-            <ul>
-              {clients.map((c) => (
-                <li key={c}>{c}</li>
-              ))}
-            </ul>
-          </div>
-        </div>
-
-        <div className="hero-tool">
-          <MarginCalculator ctaHref={whatsappLink(messages.calculadora)} />
-        </div>
+        <figure className="hero-photo">
+          <img
+            src={about.photo}
+            alt={`${company.founder}, fundador da ${company.name}`}
+            width={960}
+            height={1200}
+            decoding="async"
+          />
+        </figure>
       </div>
 
-      <div className="container">
-        <dl className="metrics">
-          {metrics.map((m) => (
-            <div key={m.value} className="metric">
-              <dt className="metric-value">{m.value}</dt>
-              <dd>
-                <span className="metric-label">{m.label}</span>
-                <span className="metric-source">{m.source}</span>
-              </dd>
-            </div>
-          ))}
-        </dl>
+      <div className="hero-foot">
+        <p className="hero-meta">
+          <span className="mono">{hero.role}</span>
+          <span className="hero-lead">{hero.lead}</span>
+        </p>
+        <span className="mono hero-loc">{hero.location}</span>
       </div>
 
-      <div className="marquee" aria-label="Canais e tecnologias">
-        <div className="marquee-track">
-          {[0, 1].map((dup) => (
-            <ul key={dup} aria-hidden={dup === 1}>
-              {channels.map((c) => (
-                <li key={c}>{c}</li>
-              ))}
-            </ul>
-          ))}
-        </div>
-      </div>
+      <a href="#sobre-vlr" className="hero-scroll" aria-label="Rolar para o conteúdo">
+        <ArrowDownIcon />
+      </a>
     </section>
   );
 }

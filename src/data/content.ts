@@ -37,7 +37,7 @@ export const messages = {
 };
 
 export const nav = [
-  { href: '#solucoes', label: 'Soluções' },
+  { href: '#servicos', label: 'Serviços' },
   { href: '#cases', label: 'Cases' },
   { href: '#planos', label: 'Planos' },
   { href: '#metodo', label: 'Método' },
@@ -45,21 +45,30 @@ export const nav = [
 ];
 
 /* ------------------------------------------------------------------ */
-/* Hero                                                                */
+/* Hero e introdução                                                   */
 /* ------------------------------------------------------------------ */
 
 export const hero = {
-  eyebrow: 'E-commerce · Software · Dados',
-  // ‑ = hífen que não quebra linha ("e‑commerce" nunca é partido).
-  title: ['Operação de e‑commerce', 'e engenharia de software.', 'Um único contrato.'],
-  lead:
+  // Nome gigante do hero, em duas linhas. A foto fica sobreposta no centro.
+  name: ['LUIZ', 'VILARINHO'],
+  role: 'Fundador da VLR Commerce & Tech',
+  location: 'Ribeirão Preto · SP',
+  lead: 'Operação de marketplaces e engenharia de software para empresas que querem crescer com margem.',
+};
+
+export const intro = {
+  // Primeira linha em tom escuro, segunda em tom suave (estilo dois tons).
+  // ‑ = hífen que não quebra linha.
+  title: ['Operação de e‑commerce e engenharia de software.', 'Um único contrato.'],
+  text:
     'A VLR gere seus marketplaces (catálogo, precificação, Ads e logística) e desenvolve os sites, CRMs e automações que sustentam o crescimento. Cada decisão parte da margem de contribuição por SKU e por canal.',
+  since: 'DESDE 2023',
 };
 
 export const metrics = [
   { value: 'R$ 2M+', label: 'faturados no 1º ano de operação reativada', source: 'Tec Print' },
   { value: '< 90 dias', label: 'da abertura da loja à liberação do Full', source: 'MLJ Store' },
-  { value: '3+ anos', label: 'operando marketplaces no dia a dia', source: 'Mercado Livre, Shopee, Amazon, Magalu' },
+  { value: '3+ anos', label: 'operando marketplaces no dia a dia', source: 'ML · Shopee · Amazon · Magalu' },
   { value: '2 frentes', label: 'operação e tecnologia sob a mesma gestão', source: 'Commerce + Tech' },
 ];
 
@@ -69,7 +78,6 @@ export const channels = [
   'Amazon',
   'Magalu',
   'Americanas',
-  'Loja própria',
   'Bling ERP',
   'Mercado Ads',
   'Meta Ads',
@@ -80,97 +88,85 @@ export const channels = [
   'SQL',
 ];
 
-export const clients = ['Nobre Brasil', 'Tec Print', 'MLJ Store', 'Rô Vilari', 'Nova Singular'];
-
 /* ------------------------------------------------------------------ */
-/* Unidades de negócio                                                 */
+/* Clientes (lista em linhas; o clique abre o case correspondente)     */
 /* ------------------------------------------------------------------ */
 
-export type Unit = {
-  id: 'commerce' | 'tech';
-  code: string;
-  name: string;
-  headline: string;
-  intro: string;
-  scope: { title: string; items: string[] }[];
-  kpis: string[];
+export const clientsIntro =
+  'Operações de marketplace, sites e sistemas para indústria, varejo online e marcas pessoais.';
+
+export const clients = [
+  { name: 'Nobre Brasil', tags: 'CRM · Site institucional · E-commerce', slug: 'nobre-crm' },
+  { name: 'Tec Print', tags: 'Reativação de marketplaces', slug: 'tec-print' },
+  { name: 'MLJ Store', tags: 'Operação própria · Full', slug: 'mlj-store' },
+  { name: 'Rô Vilari', tags: 'Site com agenda integrada', slug: 'ro-vilari' },
+  { name: 'Nova Singular', tags: 'Mídia paga', slug: 'nova-singular' },
+];
+
+/* ------------------------------------------------------------------ */
+/* Serviços (colunas 001, 002, 003)                                    */
+/* ------------------------------------------------------------------ */
+
+export type Service = {
+  unit: 'VLR Commerce' | 'VLR Tech';
+  title: string;
+  text: string;
+  items: string[];
+  mock: CoverMock;
   cta: string;
   message: string;
 };
 
-export const units: Unit[] = [
+export const servicesIntro = {
+  title: ['Duas unidades.', 'Uma operação.'],
+  text: 'Quem opera sua loja é quem escreve o código que a acelera. Contrate as frentes separadamente ou em conjunto.',
+};
+
+export const services: Service[] = [
   {
-    id: 'commerce',
-    code: 'U-01',
-    name: 'VLR Commerce',
-    headline: 'Gestão de operação multicanal',
-    intro:
-      'Assumimos a rotina dos seus canais de venda com processos documentados, metas mensais e reporte de indicadores. Você mantém a propriedade das contas; nós operamos.',
-    scope: [
-      {
-        title: 'Catálogo e conversão',
-        items: [
-          'Cadastro e otimização de anúncios: título, ficha técnica, variações, imagens e atributos por categoria',
-          'Ganho de qualidade de anúncio e posicionamento no catálogo do Mercado Livre',
-          'Curva ABC, giro, ruptura e saneamento de SKUs sem venda',
-        ],
-      },
-      {
-        title: 'Preço e mídia',
-        items: [
-          'Precificação por margem de contribuição: comissão, tarifa fixa, frete, imposto e Ads',
-          'Gestão de Mercado Ads, Shopee Ads e Amazon Ads com metas de ACOS e TACOS',
-          'Monitoramento de concorrência e Buy Box',
-        ],
-      },
-      {
-        title: 'Logística e reputação',
-        items: [
-          'Full, FBA, Mercado Envios Flex e planejamento de reposição',
-          'Gestão de reputação, prazos de postagem, reclamações e mediações',
-          'Integração com ERP (Bling) e emissão de NF-e',
-        ],
-      },
+    unit: 'VLR Commerce',
+    title: 'Operação de marketplaces',
+    text: 'Assumimos a rotina dos seus canais com processos documentados, metas mensais e reporte de indicadores. As contas continuam no seu CNPJ.',
+    items: [
+      'Cadastro e otimização de anúncios: título, ficha técnica, variações e atributos',
+      'Precificação por margem de contribuição: comissão, tarifa, frete, imposto e Ads',
+      'Mercado Ads, Shopee Ads e Amazon Ads com metas de ACOS e TACOS',
+      'Full, FBA, Mercado Envios Flex e planejamento de reposição',
+      'Reputação, prazos, reclamações e mediações',
+      'Curva ABC, giro e ruptura; integração com Bling e NF-e',
     ],
-    kpis: ['GMV', 'Margem de contribuição', 'ACOS / TACOS', 'Taxa de conversão', 'Ruptura', 'Reputação'],
+    mock: 'funnel',
     cta: 'Agendar diagnóstico',
     message: messages.diagnostico,
   },
   {
-    id: 'tech',
-    code: 'U-02',
-    name: 'VLR Tech',
-    headline: 'Desenvolvimento de software sob medida',
-    intro:
-      'Sites, sistemas internos e integrações construídos com stack moderna, código versionado e entrega por etapas. O código-fonte é do cliente.',
-    scope: [
-      {
-        title: 'Web',
-        items: [
-          'Sites institucionais e landing pages em React, TypeScript e Vite',
-          'SEO técnico: HTML pré-renderizado, Core Web Vitals, Open Graph, dados estruturados',
-          'GA4 e eventos de conversão configurados desde a publicação',
-        ],
-      },
-      {
-        title: 'Sistemas',
-        items: [
-          'CRMs e sistemas internos: cadastro, funil, orçamentos e relatórios',
-          'Controle de acesso por perfil, trilha de auditoria e senhas com hash',
-          'Bancos relacionais (PostgreSQL, MySQL) e dashboards gerenciais',
-        ],
-      },
-      {
-        title: 'Automação e dados',
-        items: [
-          'Integrações via API com Mercado Livre, Shopee, Amazon, Google e Telegram',
-          'Rotinas em Python para precificação, alertas de estoque e relatórios',
-          'Visão computacional aplicada (OpenCV, YOLO, reconhecimento facial)',
-        ],
-      },
+    unit: 'VLR Tech',
+    title: 'Sites e landing pages',
+    text: 'Sites institucionais e páginas de conversão com design sob medida, carregamento rápido e mensuração desde o primeiro dia.',
+    items: [
+      'React, TypeScript e Vite, com código no seu repositório',
+      'HTML pré-renderizado, dados estruturados e Open Graph',
+      'Core Web Vitals no verde e Lighthouse 90+',
+      'GA4, Search Console e pixel configurados',
+      'Integrações: WhatsApp, Google Agenda e formulários SMTP',
     ],
-    kpis: ['Lighthouse 90+', 'LCP < 2,5 s', 'Código no seu repositório', 'Deploy contínuo', 'Testes automatizados'],
-    cta: 'Solicitar orçamento',
+    mock: 'site',
+    cta: 'Orçar um site',
+    message: messages.tecnologia,
+  },
+  {
+    unit: 'VLR Tech',
+    title: 'Sistemas, CRM e automação',
+    text: 'Ferramentas internas que tiram a operação da planilha: cadastro, funil, orçamentos, relatórios e rotinas automáticas.',
+    items: [
+      'CRMs e sistemas internos com perfis de acesso e trilha de auditoria',
+      'PostgreSQL ou MySQL, backups e dashboards gerenciais',
+      'Integrações via API com Mercado Livre, Shopee, Amazon e Google',
+      'Rotinas em Python para preço, alertas de estoque e relatórios',
+      'Visão computacional aplicada (OpenCV, YOLO)',
+    ],
+    mock: 'crm',
+    cta: 'Orçar um sistema',
     message: messages.tecnologia,
   },
 ];
@@ -584,7 +580,7 @@ export const steps = [
 
 export const about = {
   // Para trocar a foto, salve o arquivo em public/img/ (proporção 4:5, ex.: 960 x 1200 px) e ajuste o caminho.
-  photo: '/img/luiz-vilarinho.webp',
+  photo: '/img/luiz-vilarinho-duotone.webp',
   role: 'Fundador · Head de Operações e Engenharia',
   paragraphs: [
     'A VLR Commerce & Tech nasceu de uma constatação prática: a maioria das operações de e-commerce perde margem em processos manuais que poderiam ser automatizados, e a maioria das software houses não conhece a rotina de um marketplace.',
@@ -644,6 +640,23 @@ export const faq = [
     q: 'Como é a forma de pagamento?',
     a: 'Gestão: boleto ou PIX mensal. Projetos de tecnologia: 50% na aprovação e 50% na entrega, ou parcelado em até 6x. Emitimos nota fiscal.',
   },
+];
+
+/* ------------------------------------------------------------------ */
+/* Depoimentos                                                         */
+/* Enquanto a lista estiver vazia, a seção não aparece no site.        */
+/* Use apenas depoimentos reais, com autorização do cliente.           */
+/* ------------------------------------------------------------------ */
+
+export type Testimonial = { quote: string; name: string; role: string; company: string };
+
+export const testimonials: Testimonial[] = [
+  // {
+  //   quote: 'Texto do depoimento, nas palavras do cliente.',
+  //   name: 'Nome Sobrenome',
+  //   role: 'Cargo',
+  //   company: 'Empresa',
+  // },
 ];
 
 /* ------------------------------------------------------------------ */

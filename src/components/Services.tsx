@@ -1,61 +1,43 @@
-import { units, whatsappLink } from '../data/content';
+import { services, servicesIntro, whatsappLink } from '../data/content';
+import { CaseCover } from './CaseCover';
 import { ArrowIcon } from './Icons';
-import { Section } from './Section';
+import { LinkButton, MonoBar, Sheet, TwoTone } from './ui';
 
 export function Services() {
   return (
-    <Section
-      id="solucoes"
-      index="01"
-      eyebrow="Soluções"
-      title={
-        <>
-          Duas unidades.
-          <br />
-          <span className="text-muted">Uma operação.</span>
-        </>
-      }
-      intro="Quem opera sua loja é quem escreve o código que a acelera. Contrate as unidades separadamente ou em conjunto."
-    >
-      <div className="units">
-        {units.map((u) => (
-          <article key={u.id} className={`unit unit--${u.id} reveal`}>
-            <header className="unit-head">
-              <span className="mono-label">{u.code}</span>
-              <h3 className="unit-name">{u.name}</h3>
-              <p className="unit-headline">{u.headline}</p>
-              <p className="unit-intro">{u.intro}</p>
-            </header>
+    <Sheet id="servicos" labelledBy="servicos-title" next="#cases">
+      <div className="container">
+        <MonoBar left="Serviços" center="001 — 003" right="VLR Commerce & Tech" />
 
-            <div className="unit-scope">
-              {u.scope.map((group) => (
-                <div key={group.title} className="scope-group">
-                  <h4 className="scope-title">{group.title}</h4>
-                  <ul className="dash-list">
-                    {group.items.map((item) => (
-                      <li key={item}>{item}</li>
-                    ))}
-                  </ul>
-                </div>
-              ))}
-            </div>
+        <div className="section-intro reveal">
+          <TwoTone id="servicos-title" lines={servicesIntro.title} className="display-md" />
+          <p>{servicesIntro.text}</p>
+        </div>
 
-            <footer className="unit-foot">
-              <div className="unit-kpis">
-                <span className="mono-label">{u.id === 'commerce' ? 'Indicadores acompanhados' : 'Padrão de entrega'}</span>
-                <ul className="chips">
-                  {u.kpis.map((k) => (
-                    <li key={k}>{k}</li>
-                  ))}
-                </ul>
+        <ol className="services">
+          {services.map((s, i) => (
+            <li key={s.title} className="service reveal" style={{ transitionDelay: `${i * 90}ms` }}>
+              <div className="service-top">
+                <span className="mono">{String(i + 1).padStart(3, '0')}</span>
+                <span className="mono service-unit">{s.unit}</span>
               </div>
-              <a className="btn btn-outline" href={whatsappLink(u.message)} target="_blank" rel="noopener noreferrer">
-                {u.cta} <ArrowIcon />
-              </a>
-            </footer>
-          </article>
-        ))}
+              <h3 className="service-title">{s.title}</h3>
+              <p className="service-text">{s.text}</p>
+              <div className="service-media">
+                <CaseCover cover={{ kind: 'mock', mock: s.mock }} />
+              </div>
+              <ul className="service-items">
+                {s.items.map((it) => (
+                  <li key={it}>{it}</li>
+                ))}
+              </ul>
+              <LinkButton href={whatsappLink(s.message)} variant="outline" icon={<ArrowIcon />}>
+                {s.cta}
+              </LinkButton>
+            </li>
+          ))}
+        </ol>
       </div>
-    </Section>
+    </Sheet>
   );
 }

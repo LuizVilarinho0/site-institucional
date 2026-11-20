@@ -1,76 +1,88 @@
 import { about, company } from '../data/content';
 import { GitHubIcon, LinkedInIcon } from './Icons';
-import { Section } from './Section';
+import { LinkButton, MonoBar, TwoTone } from './ui';
 
 export function About() {
   return (
-    <Section id="sobre" index="05" eyebrow="Sobre a VLR" title="Operação e engenharia na mesma cabeça.">
-      <div className="about">
-        <figure className="about-photo reveal">
-          <img
-            src={about.photo}
-            alt={`${company.founder}, fundador da ${company.name}`}
-            width={960}
-            height={1200}
-            loading="lazy"
-            decoding="async"
-          />
-          <figcaption>
-            <strong>{company.founder}</strong>
-            <span>{about.role}</span>
-          </figcaption>
-        </figure>
+    <section id="sobre" className="about" aria-labelledby="sobre-title">
+      <div className="container">
+        <MonoBar left="Fundador" center={company.name} right={company.founder} />
 
-        <div className="about-text reveal">
-          {about.paragraphs.map((p) => (
-            <p key={p}>{p}</p>
-          ))}
+        <div className="about-statement reveal">
+          <TwoTone id="sobre-title" lines={['Operação e engenharia', 'na mesma cabeça.']} className="display-lg" />
+        </div>
 
-          <dl className="facts">
-            {about.facts.map((f) => (
-              <div key={f.term} className="fact">
-                <dt className="mono-label">{f.term}</dt>
-                <dd>{f.value}</dd>
-              </div>
+        <div className="about-grid">
+          <figure className="about-photo reveal">
+            <div className="about-photo-inner" data-speed="-0.06">
+              <img
+                src={about.photo}
+                alt={`${company.founder}, fundador da ${company.name}`}
+                width={960}
+                height={1200}
+                loading="lazy"
+                decoding="async"
+              />
+            </div>
+            <figcaption>
+              <strong>{company.founder}</strong>
+              <span className="mono">{about.role}</span>
+            </figcaption>
+          </figure>
+
+          <div className="about-text">
+            {about.paragraphs.map((p, i) => (
+              <p key={p} className={`reveal ${i === 0 ? 'about-lead' : ''}`}>
+                {p}
+              </p>
             ))}
-          </dl>
 
-          <div className="timeline">
-            <h3 className="mono-label">Trajetória</h3>
-            <ol>
-              {about.timeline.map((t) => (
-                <li key={t.org}>
-                  <span className="tl-period">{t.period}</span>
-                  <span className="tl-org">{t.org}</span>
-                  <span className="tl-what">{t.what}</span>
-                </li>
+            <dl className="facts reveal">
+              {about.facts.map((f) => (
+                <div key={f.term} className="fact">
+                  <dt className="mono">{f.term}</dt>
+                  <dd>{f.value}</dd>
+                </div>
               ))}
-            </ol>
-          </div>
+            </dl>
 
-          <div className="stack">
-            {Object.entries(about.stack).map(([group, items]) => (
-              <div key={group} className="stack-group">
-                <h3 className="mono-label">{group}</h3>
-                <ul className="chips chips-sm">
-                  {items.map((s) => (
-                    <li key={s}>{s}</li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
+            <div className="timeline reveal">
+              <h3 className="mono">Trajetória</h3>
+              <ol>
+                {about.timeline.map((t) => (
+                  <li key={t.org}>
+                    <span className="mono tl-period">{t.period}</span>
+                    <span className="tl-org">{t.org}</span>
+                    <span className="tl-what">{t.what}</span>
+                  </li>
+                ))}
+              </ol>
+            </div>
 
-          <div className="about-links">
-            <a href={company.social.linkedin} target="_blank" rel="noopener noreferrer" className="btn btn-ghost btn-sm">
-              <LinkedInIcon size={16} /> LinkedIn
-            </a>
-            <a href={company.social.github} target="_blank" rel="noopener noreferrer" className="btn btn-ghost btn-sm">
-              <GitHubIcon size={16} /> GitHub
-            </a>
+            <div className="stack reveal">
+              {Object.entries(about.stack).map(([group, items]) => (
+                <div key={group} className="stack-group">
+                  <h3 className="mono">{group}</h3>
+                  <ul className="chips">
+                    {items.map((s) => (
+                      <li key={s}>{s}</li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+            </div>
+
+            <div className="about-links reveal">
+              <LinkButton href={company.social.linkedin} variant="outline" icon={<LinkedInIcon size={16} />}>
+                LinkedIn
+              </LinkButton>
+              <LinkButton href={company.social.github} variant="outline" icon={<GitHubIcon size={16} />}>
+                GitHub
+              </LinkButton>
+            </div>
           </div>
         </div>
       </div>
-    </Section>
+    </section>
   );
 }

@@ -1,7 +1,7 @@
 import { useEffect, useId, useState, type FormEvent } from 'react';
 import { company, contactForm, messages, nav, whatsappLink, WHATSAPP_DISPLAY } from '../data/content';
-import { Logo } from './Header';
-import { ArrowIcon, GitHubIcon, InstagramIcon, LinkedInIcon, MailIcon, WhatsAppIcon } from './Icons';
+import { GitHubIcon, InstagramIcon, LinkedInIcon, MailIcon, WhatsAppIcon } from './Icons';
+import { Button, LinkButton, SplitText } from './ui';
 
 export function Contact() {
   const id = useId();
@@ -29,42 +29,27 @@ export function Contact() {
 
   return (
     <section id="contato" className="contact" aria-labelledby="contato-title">
-      <div className="container contact-layout">
-        <div className="contact-copy">
-          <p className="eyebrow">
-            <span className="eyebrow-index">[07]</span> Contato
-          </p>
+      <div className="container">
+        <div className="contact-head reveal">
           <h2 id="contato-title" className="contact-title">
-            Conte como está sua operação. <span className="text-neon">Respondemos em até 1 dia útil.</span>
+            <SplitText text="VAMOS" />
+            <SplitText text="CONVERSAR" delay={5} />
           </h2>
-          <p className="contact-lead">
-            A primeira conversa é gratuita e sem compromisso. Saímos dela com um diagnóstico preliminar e o formato de
-            contratação mais adequado.
+          <p className="lead-center">
+            Conte como está sua operação ou o seu projeto. A primeira conversa é gratuita e respondemos em até 1 dia útil.
           </p>
-
-          <ul className="contact-channels">
-            <li>
-              <a href={whatsappLink(messages.geral)} target="_blank" rel="noopener noreferrer">
-                <WhatsAppIcon size={18} />
-                <span>
-                  <span className="mono-label">WhatsApp</span>
-                  {WHATSAPP_DISPLAY}
-                </span>
-              </a>
-            </li>
-            <li>
-              <a href={`mailto:${company.email}`}>
-                <MailIcon size={18} />
-                <span>
-                  <span className="mono-label">E-mail</span>
-                  {company.email}
-                </span>
-              </a>
-            </li>
-          </ul>
+          <div className="contact-actions">
+            <LinkButton href={whatsappLink(messages.geral)} icon={<WhatsAppIcon size={18} />} size="lg">
+              {WHATSAPP_DISPLAY}
+            </LinkButton>
+            <LinkButton href={`mailto:${company.email}`} variant="outline" icon={<MailIcon size={18} />} size="lg">
+              E-mail
+            </LinkButton>
+          </div>
         </div>
 
-        <form className="contact-form" onSubmit={onSubmit}>
+        <form className="contact-form reveal" onSubmit={onSubmit}>
+          <p className="mono contact-form-label">Ou envie os detalhes</p>
           <div className="form-row">
             <div className="form-field">
               <label htmlFor={`${id}-nome`}>Nome</label>
@@ -95,7 +80,7 @@ export function Contact() {
           </div>
           <div className="form-field">
             <label htmlFor={`${id}-msg`}>
-              Contexto <span className="field-hint">opcional</span>
+              Contexto <span className="mono field-hint">opcional</span>
             </label>
             <textarea
               id={`${id}-msg`}
@@ -105,9 +90,9 @@ export function Contact() {
               onChange={set('mensagem')}
             />
           </div>
-          <button type="submit" className="btn btn-neon btn-lg btn-block">
-            <WhatsAppIcon size={18} /> Enviar pelo WhatsApp
-          </button>
+          <Button type="submit" size="lg" className="btn--block" icon={<WhatsAppIcon size={18} />}>
+            Enviar pelo WhatsApp
+          </Button>
           <p className="form-note">A mensagem abre pronta no WhatsApp. Nenhum dado é armazenado neste site.</p>
         </form>
       </div>
@@ -120,43 +105,33 @@ export function Footer() {
   return (
     <footer className="footer">
       <div className="container">
-        <div className="footer-top">
-          <div className="footer-brand">
-            <Logo />
-            <p>{company.tagline}.</p>
-          </div>
-          <nav className="footer-nav" aria-label="Rodapé">
-            {nav.map((n) => (
-              <a key={n.href} href={n.href}>
-                {n.label}
-              </a>
-            ))}
-            <a href="#contato">Contato</a>
-          </nav>
-          <div className="footer-social">
-            <a href={company.social.linkedin} target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
-              <LinkedInIcon />
-            </a>
-            <a href={company.social.github} target="_blank" rel="noopener noreferrer" aria-label="GitHub">
-              <GitHubIcon />
-            </a>
-            <a href={company.social.instagram} target="_blank" rel="noopener noreferrer" aria-label="Instagram">
-              <InstagramIcon />
-            </a>
-          </div>
-        </div>
-        <div className="footer-bottom">
-          <p>
+        <div className="footer-row">
+          <p className="mono">
             © {year} {company.name}
             {company.cnpj && ` · CNPJ ${company.cnpj}`}
           </p>
-          <p>
-            {company.city} · {company.coverage}
-          </p>
-          <a href="#inicio" className="footer-top-link">
-            Voltar ao topo <ArrowIcon size={14} />
-          </a>
+          <nav className="footer-nav" aria-label="Rodapé">
+            {nav.map((n) => (
+              <a key={n.href} href={n.href} className="mono">
+                {n.label}
+              </a>
+            ))}
+          </nav>
+          <div className="footer-social">
+            <a href={company.social.linkedin} target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+              <LinkedInIcon size={16} />
+            </a>
+            <a href={company.social.github} target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+              <GitHubIcon size={16} />
+            </a>
+            <a href={company.social.instagram} target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+              <InstagramIcon size={16} />
+            </a>
+          </div>
         </div>
+      </div>
+      <div className="footer-mark" data-progress="view" aria-hidden="true">
+        <span>VLR</span>
       </div>
     </footer>
   );
@@ -182,7 +157,7 @@ export function WhatsAppFloat() {
       aria-label="Falar no WhatsApp"
       tabIndex={visible ? 0 : -1}
     >
-      <WhatsAppIcon size={26} />
+      <WhatsAppIcon size={24} />
     </a>
   );
 }

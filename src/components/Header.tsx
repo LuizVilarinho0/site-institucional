@@ -1,76 +1,96 @@
 import { useEffect, useState } from 'react';
 import { company, nav } from '../data/content';
+import { lenis } from '../hooks/useSmoothScroll';
+import { SplitText } from './ui';
 
 export function Logo() {
   return (
     <span className="logo">
-      <span className="logo-mark" aria-hidden="true">
-        <svg viewBox="0 0 32 32" width="28" height="28">
-          <rect width="32" height="32" rx="7" fill="currentColor" />
-          <path d="M8 9h3.6l4.4 11.2L20.4 9H24l-6.3 15h-3.4L8 9Z" fill="#050505" />
-        </svg>
-      </span>
-      <span className="logo-text">
-        <strong>{company.short}</strong>
-        <span>{company.suffix}</span>
-      </span>
+      <svg className="logo-mark" viewBox="0 0 32 32" width="26" height="26" aria-hidden="true">
+        <rect width="32" height="32" rx="9" fill="currentColor" />
+        <path d="M8 9h3.6l4.4 11.2L20.4 9H24l-6.3 15h-3.4L8 9Z" fill="var(--g900)" />
+      </svg>
+      <span className="logo-text">{company.short}</span>
     </span>
   );
 }
 
 export function Header() {
-  const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const [hidden, setHidden] = useState(false);
 
+  // Esconde o menu ao rolar para baixo e mostra ao rolar para cima.
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 12);
-    onScroll();
+    let last = window.scrollY;
+    const onScroll = () => {
+      const y = window.scrollY;
+      setHidden(y > 240 && y > last + 4);
+      if (y < last - 4 || y < 240) setHidden(false);
+      last = y;
+    };
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
   useEffect(() => {
-    document.body.style.overflow = open ? 'hidden' : '';
+    if (open) lenis?.stop();
+    else lenis?.start();
+    document.documentElement.classList.toggle('menu-open', open);
     const onKey = (e: KeyboardEvent) => e.key === 'Escape' && setOpen(false);
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
   }, [open]);
 
   return (
-    <header className={`header ${scrolled ? 'is-scrolled' : ''} ${open ? 'is-open' : ''}`}>
-      <div className="container header-inner">
-        <a href="#inicio" className="brand" aria-label={`${company.name}, voltar ao início`} onClick={() => setOpen(false)}>
+    <>
+      <header className={`nav ${hidden && !open ? 'is-hidden' : ''}`}>
+        <a href="#inicio" className="nav-pill nav-logo" aria-label={`${company.name}, início`}>
           <Logo />
         </a>
-
-        <nav id="menu" className="header-nav" aria-label="Seções do site">
+        <nav className="nav-pill nav-links" aria-label="Seções do site">
           {nav.map((item) => (
-            <a key={item.href} href={item.href} onClick={() => setOpen(false)}>
+            <a key={item.href} href={item.href}>
               {item.label}
             </a>
           ))}
-          <a className="btn btn-neon header-cta-mobile" href="#contato" onClick={() => setOpen(false)}>
-            Fale com a VLR
-          </a>
         </nav>
+        <a className="nav-pill nav-cta" href="#contato">
+          <span className="roll">
+            <span className="roll-a">Fale conosco</span>
+            <span className="roll-b" aria-hidden="true">
+              Fale conosco
+            </span>
+          </span>
+        </a>
+        <button
+          type="button"
+          className="nav-pill nav-toggle"
+          aria-expanded={open}
+          aria-controls="menu"
+          aria-label={open ? 'Fechar menu' : 'Abrir menu'}
+          onClick={() => setOpen((v) => !v)}
+        >
+          <span />
+          <span />
+        </button>
+      </header>
 
-        <div className="header-actions">
-          <a className="btn btn-neon btn-sm header-cta" href="#contato">
-            Fale com a VLR
+      <div id="menu" className={`menu ${open ? 'is-open' : ''}`} aria-hidden={!open} data-lenis-prevent>
+        <nav aria-label="Menu">
+          {[...nav, { href: '#contato', label: 'Contato' }].map((item, i) => (
+            <a key={item.href} href={item.href} tabIndex={open ? 0 : -1} onClick={() => setOpen(false)}>
+              <span className="menu-num">{String(i + 1).padStart(3, '0')}</span>
+              <SplitText text={item.label} delay={i * 2} />
+            </a>
+          ))}
+        </nav>
+        <div className="menu-foot">
+          <a href={`mailto:${company.email}`} tabIndex={open ? 0 : -1}>
+            {company.email}
           </a>
-          <button
-            type="button"
-            className="menu-toggle"
-            aria-expanded={open}
-            aria-controls="menu"
-            aria-label={open ? 'Fechar menu' : 'Abrir menu'}
-            onClick={() => setOpen((v) => !v)}
-          >
-            <span />
-            <span />
-          </button>
+          <span>{company.city}</span>
         </div>
       </div>
-    </header>
+    </>
   );
 }

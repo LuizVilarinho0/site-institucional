@@ -1,7 +1,14 @@
 # VLR Commerce & Tech · site institucional
 
-React + TypeScript (Vite), sem dependências além do React.
-Visual: preto, branco e verde neon (`#2BFF88`). Fontes: Geist e Geist Mono (Google Fonts).
+React + TypeScript (Vite), com Lenis para a rolagem suave.
+
+Paleta: `#051F20` `#0B2B26` `#163832` `#235347` `#8EB69B` `#DAF1DE`.
+Fontes: Archivo expandida (títulos grandes), Satoshi (texto, via Fontshare) e Geist Mono (rótulos).
+
+Efeitos: nome gigante com a foto sobreposta que se abre ao rolar, blocos claros com entalhe,
+letras que entram uma a uma, botões com texto que rola, lista de clientes com prévia que segue o
+cursor, carrossel de cases arrastável com modal de detalhes e parallax. Tudo é desligado
+automaticamente para quem usa "reduzir movimento" no sistema.
 
 ## Rodar no seu computador
 
@@ -27,8 +34,10 @@ Os arquivos finais ficam na pasta `dist/`.
 | O que mudar | Arquivo |
 | --- | --- |
 | Nome da empresa, CNPJ, e-mail, redes, WhatsApp | `src/data/content.ts` (bloco `company`) |
-| Textos, cases, planos e preços, método, FAQ | `src/data/content.ts` |
+| Textos, clientes, serviços, cases, planos e preços, método, FAQ | `src/data/content.ts` |
+| Depoimentos (a seção só aparece quando houver pelo menos um) | `testimonials` em `src/data/content.ts` |
 | Cores, fontes, espaçamentos | `src/styles.css` (bloco `:root` no topo) |
+| Efeitos de rolagem | `src/hooks/useScrollFx.ts` e `src/hooks/useSmoothScroll.ts` |
 | Capas ilustrativas dos cases | `src/components/CaseCover.tsx` |
 | Calculadora de margem | `src/components/MarginCalculator.tsx` |
 | Ordem das seções | `src/App.tsx` |
@@ -39,13 +48,14 @@ Os arquivos finais ficam na pasta `dist/`.
 - [ ] Conferir a descrição do **CRM da Nobre Brasil** em `content.ts` (módulos e tecnologias).
 - [ ] Preencher `company.cnpj` quando o CNPJ estiver ativo.
 - [ ] Revisar os preços dos planos (`pricing` em `content.ts`).
+- [ ] Adicionar depoimentos reais, com autorização dos clientes (`testimonials`).
 - [ ] Trocar a foto pela versão de terno, se gerar uma (veja abaixo).
 
 ## Foto
 
-A foto atual (`public/img/luiz-vilarinho.webp`) é a original com o fundo removido,
-fundo preto e tratamento em preto e branco. O rosto não foi alterado.
-Há também uma versão colorida em `public/img/luiz-vilarinho-cor.webp`.
+A foto em uso (`public/img/luiz-vilarinho-duotone.webp`) é a original com o fundo removido
+e duotone na paleta verde. O rosto não foi alterado. Também há versões em preto e branco
+(`luiz-vilarinho.webp`) e colorida (`luiz-vilarinho-cor.webp`) na mesma pasta.
 
 Para a versão de terno com braços cruzados, use um editor de imagem com IA
 (por exemplo, Gemini ou ChatGPT), envie a foto original e use este prompt:
